@@ -1,0 +1,74 @@
+//Credit to Łɛɠợℓɑş Ǥṛɛɛɳℓɛɑƒ for the heart. At https://www.khanacademy.org/profile/Indeluin
+var heartsDrawn = [];
+var drawHeart = function(x, y, w, h, strokeColor, strokeSize, fillColor){
+    /**
+    CREDIT: Legolas Greenleaf @Indeluin. Do not use without crediting Legolas Greenleaf.
+    Draws a heart at x and y, depending on the image mode.
+     * @param x: The x coordinate of the heart.
+     * @param y: The y coordinate of the heart.
+     * @param w: The width of the heart.
+     * @param h: The height of the heart.
+     * @param strokeColor: The color of the stroke of the heart.
+     * @param strokeSize: In strokeWeight, the weight of the stroke of the heart.
+     * @param fillColor: The color of the fill of the heart.
+    OTHER:
+     * Also import heartsDrawn to your program.
+    */
+    var heart = heartsDrawn.find(function(ele){
+        return ele.strokeColor === strokeColor && ele.strokeWeight === strokeSize && ele.fillColor === fillColor;
+    });
+    if(!heart){
+        //var newHeart = createGraphics...
+    }
+};
+var flatDesignEllipse = function(x, y, w, h, fillColor, relevanceToBlack){
+    /**
+    Draws a flat design ellipse with the shadow vertical, at the center, to the right.
+     * @param x: The x coordinate of the ellipse.
+     * @param y: The y coordinate of the ellipse.
+     * @param w: The width of the ellipse.
+     * @param h: The height of the ellipse.
+     * @param fillColor: The fill color of the left side of the ellipse.
+     * @param relevanceToBlack: The relevance to black of the right side of the ellipse. Defaults to 0.2.
+    Other:
+     * This requires ellipseMode to be CENTER (the default).
+    */
+    fill(fillColor);
+    arc(x, y, w, h, (angleMode === "degrees" ? 90 : 1.5708), (angleMode === "degrees" ? 270 : 4.71239));
+    fill(lerpColor(fillColor, color(0, 0, 0), relevanceToBlack || 0.2));
+    arc(x, y, w, h, (angleMode === "degrees" ? -90 : -1.5708), (angleMode === "degrees" ? 90 : 1.5708));
+};
+var flatDesignRect = function(x, y, w, h, r, fillColor, modeOfRect, relevanceToBlack){
+    /**
+    Draws a flat design rectangle with the shadow vertical, at the center, to the right.
+     * @param x: The x coordinate of the rectangle.
+     * @param y: The y coordinate of the rectangle.
+     * @param w: The width of the rectangle.
+     * @param h: The height of the rectangle.
+     * @param r: The radius of the rectangle. If none, put 0.
+     * @param fillColor: The fill color of the left side of the rectangle.
+     * @param modeOfRect: The rectMode used to draw this rectangle. Defaults to CORNER.
+     * @param relevanceToBlack: The relevance to black of the right side of the rectangle. Defaults to 0.2.
+    */
+    relevanceToBlack = relevanceToBlack || 0.2;
+    switch(modeOfRect){
+        case CENTER:
+            fill(fillColor);
+            rect.call(null, x - (w / 4), y, w / 2, h, r, 0, 0, r);
+            fill(lerpColor(fillColor, color(0, 0, 0), relevanceToBlack));
+            rect.call(null, x + (w / 4), y, w / 2, h, 0, r, r, 0);
+            break;
+        case CORNERS:
+            fill(fillColor);
+            rect.call(null, x, y, (x + w) / 2, h, r, 0, 0, r);
+            fill(lerpColor(fillColor, color(0, 0, 0), relevanceToBlack));
+            rect.call(null, (x + w) / 2, y, w, h, 0, r, r, 0);
+        break;
+        default:
+            fill(fillColor);
+            rect.call(null, x, y, w / 2, h, r, 0, 0, r); //Since Oh Noes throws an error when you call rect with 8 parameters.
+            fill(lerpColor(fillColor, color(0, 0, 0), relevanceToBlack));
+            rect.call(null, x + (w / 2), y, w / 2, h, 0, r, r, 0);
+            break;
+    }
+};
